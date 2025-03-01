@@ -23,9 +23,21 @@ const AuthProvider = ({ children }) => {
 
   const navigate = useNavigate();
 
+  
+  const logout = () => {
+    localStorage.removeItem("token");
+    delete axios.defaults.headers.common["x-auth-token"];
+    setUser(null);
+    navigate("/login");
+  };
+
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
+      const tokenExpiration = JSON.parse(atob(token.split(".")[1])).exp * 1000;
+      if (Date.now() > tokenExpiration) {
+        logout();
+      }
       axios.defaults.headers.common["x-auth-token"] = token;
       const decoded = jwtDecode(token);
       setUser(decoded);
@@ -40,13 +52,6 @@ const AuthProvider = ({ children }) => {
     const decoded = jwtDecode(res.data.token);
     setUser(decoded);
     navigate("/products");
-  };
-
-  const logout = () => {
-    localStorage.removeItem("token");
-    delete axios.defaults.headers.common["x-auth-token"];
-    setUser(null);
-    navigate("/login");
   };
 
   return (

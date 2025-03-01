@@ -7,6 +7,7 @@ import { AuthContext } from '../context/AuthContext';
 
 const Sidebar = () => {
   const [selectedKey, setSelectedKey] = useState('0');
+  const [collapsed, setCollapsed] = useState(true);
   const navigate = useNavigate();
   const { logout } = useContext(AuthContext);
 
@@ -32,52 +33,44 @@ const Sidebar = () => {
       default:
         break;
     }
-
   };
 
   const handleLogout = () => {
     logout();
   };
 
-  const sidebarStyle = {
-    height: '100%',
-    backgroundColor: '#001529',
-  };
+  const menuItems = [
+    { key: '0', icon: <DatabaseOutlined />, label: 'Dashboard' },
+    { key: '1', icon: <ShopOutlined />, label: 'Suppliers' },
+    { key: '2', icon: <ShoppingCartOutlined />, label: 'Orders' },
+    { key: '3', icon: <UserOutlined />, label: 'Customers' },
+    { key: '4', icon: <InboxOutlined />, label: 'Inventory' },
+  ];
 
   return (
     <div className="h-screen">
-    <Sider style={sidebarStyle} collapsible>
+      <Sider 
+        className="h-full" 
+        collapsed={collapsed} 
+        onCollapse={(collapsed) => setCollapsed(collapsed)} 
+        collapsible
+      >
         <div className="logo" />
         <Menu
           theme="dark"
           defaultSelectedKeys={[selectedKey]}
           mode="inline"
           onClick={handleMenuClick}
-        >
-          <Menu.Item key="0" icon={<DatabaseOutlined />}>
-            Dashboard
-          </Menu.Item>
-          <Menu.Item key="1" icon={<ShopOutlined />}>
-            Suppliers
-          </Menu.Item>
-          <Menu.Item key="2" icon={<ShoppingCartOutlined />}>
-            Orders
-          </Menu.Item>
-          <Menu.Item key="3" icon={<UserOutlined />}>
-            Customers
-          </Menu.Item>
-          <Menu.Item key="4" icon={<InboxOutlined />}>
-            Inventory
-          </Menu.Item>
-        </Menu>
+          items={menuItems}
+        />
         <div style={{ position: 'absolute', bottom: 64, width: '100%', padding: '16px' }}>
           <Button type="primary" danger block onClick={handleLogout}>
             <LogoutOutlined />
           </Button>
         </div>
       </Sider>
-      </div>
-  )
-}
+    </div>
+  );
+};
 
 export default Sidebar;

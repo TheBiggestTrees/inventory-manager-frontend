@@ -22,7 +22,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <AuthProvider>
         <Routes>
           <Route path="/" element={<Layout />}>
-            <Route index element={<Dashboard />} />
+            <Route index element={<PrivateRoute><Dashboard /></PrivateRoute>} />
             <Route path="login" element={<RedirectIfAuthenticated><Login /></RedirectIfAuthenticated>} />
             <Route path="register" element={<RedirectIfAuthenticated><Register /></RedirectIfAuthenticated>} />
             <Route path="products" element={<PrivateRoute><ProductList /></PrivateRoute>} />
