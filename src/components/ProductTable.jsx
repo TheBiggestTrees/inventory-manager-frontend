@@ -19,7 +19,7 @@ const ProductTable = ({
       <thead className="bg-gray-50">
         <tr>
           <th className="w-12 px-4 py-2"></th>
-          {['sku', 'name', 'category', 'quantity', 'listPrice', 'costPrice', 'location'].map(key => (
+          {['title', 'artist', 'genre', 'releaseDate', 'quantity', 'sku', 'listPrice', 'costPrice'].map(key => (
             <th 
               key={key}
               className="px-4 py-2 text-left text-sm font-medium text-gray-500 cursor-pointer" 

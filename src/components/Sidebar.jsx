@@ -7,7 +7,7 @@ import { AuthContext } from '../context/AuthContext';
 
 const Sidebar = () => {
   const [selectedKey, setSelectedKey] = useState('0');
-  const [collapsed, setCollapsed] = useState(true);
+  const [collapsed, setCollapsed] = useState(false);
   const navigate = useNavigate();
   const { logout } = useContext(AuthContext);
 
@@ -39,6 +39,10 @@ const Sidebar = () => {
     logout();
   };
 
+  const handleCollapse = (collapsed) => {
+    setCollapsed(collapsed);
+  }
+
   const menuItems = [
     { key: '0', icon: <DatabaseOutlined />, label: 'Dashboard' },
     { key: '1', icon: <ShopOutlined />, label: 'Suppliers' },
@@ -52,7 +56,7 @@ const Sidebar = () => {
       <Sider 
         className="h-full" 
         collapsed={collapsed} 
-        onCollapse={(collapsed) => setCollapsed(collapsed)} 
+        onCollapse={handleCollapse} 
         collapsible
       >
         <div className="logo" />

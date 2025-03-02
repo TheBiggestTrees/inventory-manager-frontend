@@ -3,8 +3,10 @@ import React, { useState } from 'react';
 import api from '../utils/axiosConfig';
 import FilterBox from './FilterBox';
 import ProductTable from './ProductTable';
+import AddProductModal from './AddProductModal';
 import { useProducts } from '../hooks/useProducts';
 import { convertToCSV, downloadCSV } from '../utils/productUtils';
+import { Button } from 'antd';
 
 const ProductList = () => {
   const {
@@ -51,6 +53,8 @@ const ProductList = () => {
     category: '',
     location: ''
   });
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleEdit = (product) => {
     setEditingProduct(product._id);
@@ -211,6 +215,16 @@ const ProductList = () => {
       {success && <p className="text-green-500 mb-4 text-center">{success}</p>}
       {error && <p className="text-red-500 mb-4 text-center">{error}</p>}
       
+      <Button type="primary" onClick={() => setIsModalOpen(true)} className="mb-4">
+        Add Product
+      </Button>
+
+      <AddProductModal
+        isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
+        fetchProducts={fetchProducts}
+      />
+
       {selectedProducts.length > 0 && (
         <div className="bg-white rounded-lg shadow p-4 mb-6">
           <div className="flex items-center justify-between">
